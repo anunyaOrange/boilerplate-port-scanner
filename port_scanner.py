@@ -5,4 +5,10 @@ def get_open_ports(target, port_range, verbose = False):
     print(target)
     print(port_range)
     print(verbose)
+
+
+
+
+
+    
     return(open_ports)
