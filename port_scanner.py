@@ -14,4 +14,8 @@ def get_open_ports(target, port_range, verbose = False):
 PORT     SERVICE
 22       ssh
 80       http"""
+
+
+
+
     return(open_ports)
