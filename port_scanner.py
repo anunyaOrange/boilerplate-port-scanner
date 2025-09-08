@@ -1,6 +1,7 @@
 from common_ports import *
 import validators
 import ipaddress
+import sys
 import socket
 
 def is_valid_ip(ip_string):
@@ -20,8 +21,28 @@ def get_open_ports(target, port_range, verbose = False):
         if not validators.domain(target):
             return("Error: Invalid hostname")
     
+    # lines = ["Line one.", "Line two.", "Line three."]
+    # joined_string = "\n".join(lines)
+    # print(joined_string)
 
-
+    try:
+        for port in range(port_range[0],port_range[1]):
+            print(f"start with TARGET: {target} PORT: {port}")
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            socket.setdefaulttimeout(1)
+            result = s.connect_ex((target,port))
+            if result ==0:
+                print("Port {} is open".format(port))
+            s.close()
+    except KeyboardInterrupt:
+        print("\n Exiting Program !!!!")
+        sys.exit()
+    except socket.gaierror:
+        print("\n Hostname Could Not Be Resolved !!!!")
+        sys.exit()
+    except socket.error:
+        print("\ Server not responding !!!!")
+        sys.exit()
 
     
 
@@ -30,3 +51,4 @@ def get_open_ports(target, port_range, verbose = False):
 PORT     SERVICE
 22       ssh
 80       http"""
+    return 1
