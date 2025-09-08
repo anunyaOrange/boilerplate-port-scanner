@@ -13,6 +13,7 @@ def is_valid_ip(ip_string):
 
 def get_open_ports(target, port_range, verbose = False):
     open_ports = []
+    isDomain = False
     targetIP = ""
     if (target[:1].isdigit()):
         if not is_valid_ip(target):
@@ -24,11 +25,12 @@ def get_open_ports(target, port_range, verbose = False):
             return("Error: Invalid hostname")
         else:
             try:
+                isDomain = True
                 targetIP = socket.gethostbyname(target)
             except socket.gaierror:
                 return("Error: Invalid hostname")
     
-    lines = [f"Open ports for {target} ({targetIP})"]
+    lines = [f"Open ports for {target} ({targetIP})"] if isDomain else [f"Open ports for {targetIP}"]
     lines.append("PORT     SERVICE")
 
     try:
