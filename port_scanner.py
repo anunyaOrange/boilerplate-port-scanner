@@ -21,9 +21,8 @@ def get_open_ports(target, port_range, verbose = False):
         if not validators.domain(target):
             return("Error: Invalid hostname")
     
-    # lines = ["Line one.", "Line two.", "Line three."]
-    # joined_string = "\n".join(lines)
-    # print(joined_string)
+    lines = [f"Open ports for {target}"]
+    lines.append("PORT     SERVICE")
 
     try:
         for port in range(port_range[0],port_range[1]):
@@ -33,6 +32,7 @@ def get_open_ports(target, port_range, verbose = False):
             result = s.connect_ex((target,port))
             if result ==0:
                 print("Port {} is open".format(port))
+                lines.append(f"{port}")
             s.close()
     except KeyboardInterrupt:
         print("\n Exiting Program !!!!")
@@ -47,8 +47,11 @@ def get_open_ports(target, port_range, verbose = False):
     
 
     if (verbose):
-        return """Open ports for scanme.nmap.org (45.33.32.156)
-PORT     SERVICE
-22       ssh
-80       http"""
+        joined_string = "\n".join(lines)
+        print(joined_string)
+        return joined_string
+#         return """Open ports for scanme.nmap.org (45.33.32.156)
+# PORT     SERVICE
+# 22       ssh
+# 80       http"""
     return 1
