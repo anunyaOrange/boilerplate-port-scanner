@@ -41,7 +41,7 @@ def get_open_ports(target, port_range, verbose = False):
             result = s.connect_ex((targetIP,port))
             if result ==0:
                 print("Port {} is open".format(port))
-                lines.append(f"{port}")
+                lines.append(f"{port:<5}    {target}")
             s.close()
     except KeyboardInterrupt:
         print("\n Exiting Program !!!!")
