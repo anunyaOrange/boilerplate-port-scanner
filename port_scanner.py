@@ -41,7 +41,7 @@ def get_open_ports(target, port_range, verbose = False):
             result = s.connect_ex((targetIP,port))
             if result ==0:
                 print("Port {} is open".format(port))
-                lines.append(f"{port:<5}    {target}")
+                lines.append(f"{port:<5}    {ports_and_services[port] if port in ports_and_services else "Unknown"}")
             s.close()
     except KeyboardInterrupt:
         print("\n Exiting Program !!!!")
@@ -59,8 +59,5 @@ def get_open_ports(target, port_range, verbose = False):
         joined_string = "\n".join(lines)
         print(joined_string)
         return joined_string
-#         return """Open ports for scanme.nmap.org (45.33.32.156)
-# PORT     SERVICE
-# 22       ssh
-# 80       http"""
-    return 1
+    else:
+        return 1
