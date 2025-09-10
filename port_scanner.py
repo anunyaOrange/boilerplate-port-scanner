@@ -30,6 +30,7 @@ def get_open_ports(target, port_range, verbose = False):
             except socket.gaierror:
                 return("Error: Invalid hostname")
     
+    portLine = []
     lines = [f"Open ports for {target} ({targetIP})"] if isDomain else [f"Open ports for {targetIP}"]
     lines.append("PORT     SERVICE")
 
@@ -41,7 +42,8 @@ def get_open_ports(target, port_range, verbose = False):
             result = s.connect_ex((targetIP,port))
             if result ==0:
                 print("Port {} is open".format(port))
-                lines.append(f"{port:<5}    {ports_and_services[port] if port in ports_and_services else "Unknown"}")
+                lines.append(f"{port:<5}    {ports_and_services[port] if port in ports_and_services else 'Unknown'}")
+                portLine.append(port)
             s.close()
     except KeyboardInterrupt:
         print("\n Exiting Program !!!!")
@@ -60,4 +62,4 @@ def get_open_ports(target, port_range, verbose = False):
         print(joined_string)
         return joined_string
     else:
-        return 1
+        return portLine
